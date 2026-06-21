@@ -1,0 +1,93 @@
+name: Build & Release geosite.dat
+
+# Builds our custom geosite.dat from data/ on every push to main and on a
+# daily schedule (to pick up upstream list refreshes), then publishes a GitHub
+# Release tagged with a UTC timestamp (same convention as roscomvpn / Loyalsoldier).
+#
+# NOTE: data/ is committed plaintext and is the source of truth for the build.
+# The "refresh-sources" job (optional, manual) re-harvests upstream lists via
+# build_sources.sh and commits the diff; the build job only compiles data/.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/**'
+      - '.github/workflows/build.yml'
+  schedule:
+    - cron: '17 3 * * *'   # daily 03:17 UTC
+  workflow_dispatch:
+    inputs:
+      refresh_sources:
+        description: 'Re-harvest upstream lists (build_sources.sh) before compiling'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write   # needed to create releases & push refreshed data/
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: (optional) Refresh sources from upstream
+        if: ${{ github.event_name == 'schedule' || inputs.refresh_sources }}
+        run: |
+          bash ./build_sources.sh
+          if ! git diff --quiet -- data/; then
+            git config user.name  "geosite-bot"
+            git config user.email "bot@users.noreply.github.com"
+            git add data/
+            git commit -m "chore: refresh category sources from upstream [skip ci]"
+            git push || echo "push skipped (detached / no perms)"
+          fi
+
+      - name: Build domain-list compiler
+        run: |
+          git clone --depth 1 https://github.com/v2fly/domain-list-community.git /tmp/dlc
+          cd /tmp/dlc
+          GOFLAGS=-mod=mod go build -o /tmp/dlc-compiler .
+
+      - name: Compile geosite.dat
+        run: |
+          /tmp/dlc-compiler -datapath ./data -outputdir ./ -outputname geosite.dat
+          sha256sum geosite.dat | tee geosite.dat.sha256sum
+
+      - name: Verify categories are present & resolvable
+        run: |
+          /tmp/dlc-compiler -datapath ./data -outputdir /tmp/verify -outputname geosite.dat \
+            -exportlists "our-whitelist,our-category-ru,our-geoblock-ru,our-ads,our-winspy,our-torrent"
+          for c in our-whitelist our-category-ru our-geoblock-ru our-ads our-winspy our-torrent; do
+            test -s "/tmp/verify/$c.txt" || { echo "missing/empty: $c"; exit 1; }
+            echo "$c: $(wc -l < /tmp/verify/$c.txt) entries"
+          done
+          # Safety gate: foreign geo-blockers must NOT be in our-geoblock-ru
+          if grep -iqE 'adobe|openai|spotify|behance|arkoselabs|crashlytics|ftcdn|netflix|claude' /tmp/verify/our-geoblock-ru.txt; then
+            echo "FAIL: foreign-block service leaked into our-geoblock-ru"; exit 1
+          fi
+
+      - name: Compute release tag
+        id: tag
+        run: echo "tag=$(date -u +'%Y%m%d%H%M')" >> "$GITHUB_OUTPUT"
+
+      - name: Create Release
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.tag }}
+          name: geosite ${{ steps.tag.outputs.tag }}
+          body: |
+            Custom xray geosite.dat — categories:
+            our-whitelist, our-category-ru, our-geoblock-ru, our-ads, our-winspy, our-torrent.
+            Built from `data/` via v2fly/domain-list-community.
+          files: |
+            geosite.dat
+            geosite.dat.sha256sum
