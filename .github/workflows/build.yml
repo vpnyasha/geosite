@@ -1,12 +1,15 @@
 name: Build & Release geosite.dat
 
 # Builds our custom geosite.dat from data/ on every push to main and on a
-# daily schedule (to pick up upstream list refreshes), then publishes a GitHub
-# Release tagged with a UTC timestamp (same convention as roscomvpn / Loyalsoldier).
+# daily schedule (to pick up upstream list refreshes), then publishes the built
+# .dat into the orphan `release` branch (so jsDelivr can serve it from the git
+# tree) and pins it with a UTC-timestamp tag. A GitHub Release mirrors the asset.
 #
-# NOTE: data/ is committed plaintext and is the source of truth for the build.
-# The "refresh-sources" job (optional, manual) re-harvests upstream lists via
-# build_sources.sh and commits the diff; the build job only compiles data/.
+# Consume from RU-reachable CDN:
+#   stable (auto-latest, ~12h cache): https://cdn.jsdelivr.net/gh/vpnyasha/geosite@release/geosite.dat
+#   pinned  (immutable):              https://cdn.jsdelivr.net/gh/vpnyasha/geosite@<TAG>/geosite.dat
+#
+# data/ on main is the plaintext source of truth; the build only compiles it.
 
 on:
   push:
@@ -24,7 +27,11 @@ on:
         default: false
 
 permissions:
-  contents: write   # needed to create releases & push refreshed data/
+  contents: write   # create tags/releases, push to release branch & refreshed data/
+
+concurrency:
+  group: geosite-build
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -78,16 +85,31 @@ jobs:
         id: tag
         run: echo "tag=$(date -u +'%Y%m%d%H%M')" >> "$GITHUB_OUTPUT"
 
-      - name: Create Release
+      - name: Publish geosite.dat to `release` branch + tag (jsDelivr-servable)
+        run: |
+          TAG="${{ steps.tag.outputs.tag }}"
+          cp geosite.dat geosite.dat.sha256sum /tmp/
+          git config user.name  "geosite-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git switch --orphan release
+          git rm -rf . >/dev/null 2>&1 || true
+          cp /tmp/geosite.dat /tmp/geosite.dat.sha256sum .
+          printf '# geosite.dat (artifact branch)\n\nAuto-built %s from `data/` on `main` via v2fly/domain-list-community.\n\njsDelivr (stable): https://cdn.jsdelivr.net/gh/vpnyasha/geosite@release/geosite.dat\njsDelivr (pinned): https://cdn.jsdelivr.net/gh/vpnyasha/geosite@%s/geosite.dat\n' "$TAG" "$TAG" > README.md
+          git add -f geosite.dat geosite.dat.sha256sum README.md
+          git commit -m "geosite $TAG"
+          git push -f origin release
+          git tag "$TAG"
+          git push origin "$TAG"
+
+      - name: GitHub Release (github.com asset mirror)
         if: ${{ github.event_name != 'pull_request' }}
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.tag.outputs.tag }}
           name: geosite ${{ steps.tag.outputs.tag }}
           body: |
-            Custom xray geosite.dat — categories:
-            our-whitelist, our-category-ru, our-geoblock-ru, our-ads, our-winspy, our-torrent.
-            Built from `data/` via v2fly/domain-list-community.
+            Stable jsDelivr: https://cdn.jsdelivr.net/gh/vpnyasha/geosite@release/geosite.dat
+            Pinned jsDelivr: https://cdn.jsdelivr.net/gh/vpnyasha/geosite@${{ steps.tag.outputs.tag }}/geosite.dat
           files: |
             geosite.dat
             geosite.dat.sha256sum
