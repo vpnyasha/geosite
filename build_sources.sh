@@ -223,14 +223,14 @@ catnl "$RCV/category-ru" "$OUT/our-whitelist" "$OUT/our-geoblock-ru" | norm > "$
 # 4. our-ads  — curated ad/tracking networks (kept lean for routing, not a
 #               167k-line DNS blocklist). roscomvpn ads + v2fly leaves + curated.
 # =============================================================================
+# SEARCH-ENGINE EXCLUSION: never block ad/analytics domains of search engines
+# (Google / Yandex / Mail.ru). Blocking them makes the browser look non-human to
+# those engines -> more "your computer is sending automated queries" CAPTCHAs, and
+# adds no real value. We still block 3rd-party ad/tracking networks. Applied to
+# ALL upstream ad sources so a re-harvest can never reintroduce them.
+SEARCH_EXCLUDE='google|gstatic|doubleclick|2mdn|googleapis|ggpht|googleusercontent|yandex|adfox|mail\.ru'
+
 cat > "$CACHE/ads_curated.txt" <<'EOF'
-domain:doubleclick.net
-domain:googlesyndication.com
-domain:googleadservices.com
-domain:google-analytics.com
-domain:googletagmanager.com
-domain:googletagservices.com
-domain:adservice.google.com
 domain:scorecardresearch.com
 domain:criteo.com
 domain:criteo.net
@@ -257,11 +257,6 @@ domain:mixpanel.com
 domain:segment.com
 domain:hotjar.com
 domain:fullstory.com
-domain:mc.yandex.ru
-domain:an.yandex.ru
-domain:adfox.ru
-domain:top-fwz1.mail.ru
-domain:rs.mail.ru
 domain:counter.yadro.ru
 domain:mgid.com
 domain:propellerads.com
@@ -269,7 +264,7 @@ EOF
 { catnl "$RCV/category-ads" "$CACHE/ads_curated.txt";
   catnl "$V2/v2-category-ads-all" 2>/dev/null | flatten_bare;
   catnl "$V2"/v2-ad-* 2>/dev/null | flatten_bare; } \
-  | norm > "$OUT/our-ads"
+  | norm | grep -vE "$SEARCH_EXCLUDE" > "$OUT/our-ads"
 
 # =============================================================================
 # 5. our-winspy  — Windows telemetry (roscomvpn + Loyalsoldier, deduped)
