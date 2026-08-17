@@ -10,6 +10,7 @@
 # Categories produced:
 #   our-whitelist   our-category-ru   our-geoblock-ru
 #   our-ads         our-winspy        our-torrent
+#   private         our-games
 # =============================================================================
 set -euo pipefail
 
@@ -61,6 +62,7 @@ echo ">> Harvest v2fly domain-list-community"
 VB="https://raw.githubusercontent.com/v2fly/domain-list-community/master/data"
 fetch "$VB/category-public-tracker" "$V2/v2-public-tracker" || true
 fetch "$VB/category-ads-all"        "$V2/v2-category-ads-all" || true
+fetch "$VB/private"                 "$V2/v2-private" || true
 for f in openx pubmatic taboola segment adjust ogury supersonic growingio clearbit; do
   fetch "$VB/$f" "$V2/v2-ad-$f" || true
 done
@@ -277,10 +279,54 @@ EOF
 # =============================================================================
 catnl "$RCV/torrent" "$V2/v2-public-tracker" | norm > "$OUT/our-torrent"
 
+# =============================================================================
+# 7. private  — RFC special-use names (localhost, .lan, .local, home.arpa,
+#               in-addr.arpa reverse zones). Straight from v2fly, no curation.
+# -----------------------------------------------------------------------------
+# WHY IT LIVES HERE: a client loads exactly ONE geosite.dat — ours. Referencing a
+# category we do not ship (e.g. the upstream "private") makes xray fail to load
+# the whole config, so DirectSites cannot borrow it from anywhere else.
+# =============================================================================
+catnl "$V2/v2-private" | flatten_bare | norm > "$OUT/private"
+
+# =============================================================================
+# 8. our-games  — game content/CDN + game servers that must go DIRECT.
+# -----------------------------------------------------------------------------
+# Games suffer from tunnelling twice over: bulk downloads eat the exit's
+# bandwidth, and every millisecond of added latency is felt. Anything listed
+# here is reachable from RU without a VPN — that is the entry criterion.
+#
+# DELIBERATELY NOT HERE (must keep using the tunnel):
+#   * Discord, Roblox        — blocked in RU, direct would kill them outright.
+#   * steamcommunity.com     — has been blocked in RU; the store/CDN have not.
+#   * PSN / Xbox / Nintendo stores, Epic, EA, Ubisoft, Riot, Blizzard,
+#     wargaming.net          — they geo-fence RU accounts and purchases, so
+#                              people reach them THROUGH the VPN on purpose.
+# Shared CDNs (akamai, cloudfront) are unroutable by domain and are left alone.
+# =============================================================================
+cat > "$CACHE/games_curated.txt" <<'EOF'
+# Valve / Steam — content delivery and game servers (store works from RU)
+domain:steampowered.com
+domain:steamstatic.com
+domain:steamcontent.com
+domain:steamusercontent.com
+domain:steamserver.net
+domain:steamgames.com
+domain:steamcdn-a.akamaihd.net
+domain:valve.net
+# RU game platforms
+domain:vkplay.ru
+domain:my.games
+domain:lesta.ru
+domain:tanki.su
+domain:4game.com
+EOF
+norm < "$CACHE/games_curated.txt" > "$OUT/our-games"
+
 # ---- report ----------------------------------------------------------------
 echo
 echo "=== CATEGORY COUNTS ==="
-for f in our-whitelist our-category-ru our-geoblock-ru our-ads our-winspy our-torrent; do
+for f in our-whitelist our-category-ru our-geoblock-ru our-ads our-winspy our-torrent private our-games; do
   printf "%-18s %6d entries\n" "$f" "$(wc -l < "$OUT/$f")"
 done
 echo
@@ -289,4 +335,11 @@ if grep -iqE 'adobe|openai|chatgpt|spotify|behance|arkoselabs|crashlytics|ftcdn|
   echo "!! LEAK DETECTED in our-geoblock-ru" >&2; exit 1
 else
   echo "ok — no foreign-block services in our-geoblock-ru"
+fi
+
+echo "Safety check: RU-blocked services must NOT appear in our-games (it routes direct):"
+if grep -iqE 'discord|roblox|steamcommunity' "$OUT/our-games"; then
+  echo "!! LEAK DETECTED in our-games" >&2; exit 1
+else
+  echo "ok — no RU-blocked services in our-games"
 fi

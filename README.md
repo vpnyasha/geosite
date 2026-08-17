@@ -13,9 +13,22 @@ truth; `geosite.dat` is compiled from them with
 | `our-whitelist`    | RU domains on **foreign CDNs** (geoip:ru misses them) + critical RU services needing a RU IP (banks, NSPK/MirPay, gov, marketplaces, telecom, media, MOEX, streaming, VK/Mail/Yandex) + IDN `.рф` | **DIRECT** | 472 |
 | `our-category-ru`  | Broad enriched RU domain set | **DIRECT** | 528 |
 | `our-geoblock-ru`  | **RU side only** — RU services that geo-fence **foreign** IPs (4pda, habr, kinopoisk, gosuslugi, banking…) | **DIRECT** | 37 |
-| `our-ads`          | Ad / tracking networks | **BLOCK** | 89 |
+| `our-games`        | Game CDN / content / game servers reachable from RU without a VPN (Valve/Steam, RU platforms) — bulk downloads and latency both suffer from tunnelling | **DIRECT** | 13 |
+| `private`          | RFC special-use names (`localhost`, `.lan`, `.local`, `home.arpa`, reverse zones) — straight from v2fly | **DIRECT** | 131 |
+| `our-ads`          | Ad / tracking networks | **BLOCK** | 73 |
 | `our-winspy`       | Windows telemetry | **BLOCK** | 381 |
-| `our-torrent`      | Torrent trackers / DHT | **BLOCK** | 838 |
+| `our-torrent`      | Torrent trackers / DHT | **BLOCK** | 837 |
+
+> `private` is shipped here on purpose: a client loads exactly **one** `geosite.dat` — ours.
+> Referencing a category we do not ship makes xray fail to load the whole config, so
+> `DirectSites` cannot borrow `private` from anywhere else.
+
+> `our-games` routes **direct**, so the entry criterion is «reachable from RU without a VPN».
+> Discord, Roblox and `steamcommunity.com` are blocked in RU and stay **out** — direct would
+> take them away from the tunnel that is their only way in. PSN / Xbox / Nintendo stores, Epic,
+> EA, Ubisoft, Riot, Blizzard and `wargaming.net` geo-fence RU accounts, so people reach them
+> *through* the VPN on purpose — also out. A CI gate fails the build if any of
+> `discord|roblox|steamcommunity` shows up in the category.
 
 > Counts are real, taken after harvest+dedup. Re-run `build_sources.sh` to refresh.
 
@@ -26,9 +39,10 @@ truth; `geosite.dat` is compiled from them with
 - **Loyalsoldier/v2ray-rules-dat** (`release` branch): `win-spy.txt` (telemetry enrichment).
 - **v2fly/domain-list-community** (`master/data`): `category-public-tracker` (torrent enrichment),
   `category-ads-all` + ad-network leaf lists (`openx`, `pubmatic`, `taboola`, `segment`, `adjust`,
-  `ogury`, `supersonic`, `growingio`, `clearbit`) for ads enrichment.
+  `ogury`, `supersonic`, `growingio`, `clearbit`) for ads enrichment, and `private` verbatim.
 - **Curated by us** (in `build_sources.sh`): banks, NSPK/MirPay, gov, marketplaces, telecom,
-  media, VK/Mail/Yandex clusters, IDN `.рф`, and the main global ad/tracking networks.
+  media, VK/Mail/Yandex clusters, IDN `.рф`, the main global ad/tracking networks, and the
+  game platforms in `our-games`.
 
 All lists are public and harvesting plaintext is legal.
 

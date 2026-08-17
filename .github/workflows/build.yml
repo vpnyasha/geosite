@@ -71,14 +71,19 @@ jobs:
       - name: Verify categories are present & resolvable
         run: |
           /tmp/dlc-compiler -datapath ./data -outputdir /tmp/verify -outputname geosite.dat \
-            -exportlists "our-whitelist,our-category-ru,our-geoblock-ru,our-ads,our-winspy,our-torrent"
-          for c in our-whitelist our-category-ru our-geoblock-ru our-ads our-winspy our-torrent; do
+            -exportlists "our-whitelist,our-category-ru,our-geoblock-ru,our-ads,our-winspy,our-torrent,private,our-games"
+          for c in our-whitelist our-category-ru our-geoblock-ru our-ads our-winspy our-torrent private our-games; do
             test -s "/tmp/verify/$c.txt" || { echo "missing/empty: $c"; exit 1; }
             echo "$c: $(wc -l < /tmp/verify/$c.txt) entries"
           done
           # Safety gate: foreign geo-blockers must NOT be in our-geoblock-ru
           if grep -iqE 'adobe|openai|spotify|behance|arkoselabs|crashlytics|ftcdn|netflix|claude' /tmp/verify/our-geoblock-ru.txt; then
             echo "FAIL: foreign-block service leaked into our-geoblock-ru"; exit 1
+          fi
+          # Safety gate: our-games routes DIRECT, so anything blocked in RU must stay out —
+          # sending it direct would take it away from the tunnel that is the only way in.
+          if grep -iqE 'discord|roblox|steamcommunity' /tmp/verify/our-games.txt; then
+            echo "FAIL: RU-blocked service leaked into our-games"; exit 1
           fi
 
       - name: Compute release tag
