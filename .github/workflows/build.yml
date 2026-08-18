@@ -68,6 +68,9 @@ jobs:
           /tmp/dlc-compiler -datapath ./data -outputdir ./ -outputname geosite.dat
           sha256sum geosite.dat | tee geosite.dat.sha256sum
 
+      - name: Build Mihomo/Clash rule-sets
+        run: bash ./build_clash.sh
+
       - name: Verify categories are present & resolvable
         run: |
           /tmp/dlc-compiler -datapath ./data -outputdir /tmp/verify -outputname geosite.dat \
@@ -95,7 +98,7 @@ jobs:
           TAG="${{ steps.tag.outputs.tag }}"
           git config user.name  "geosite-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add -f geosite.dat geosite.dat.sha256sum
+          git add -f geosite.dat geosite.dat.sha256sum clash/
           if git diff --cached --quiet; then echo "geosite.dat unchanged, skipping commit"; else
             git commit -m "build: geosite.dat $TAG [skip ci]"
             git push origin HEAD:main
