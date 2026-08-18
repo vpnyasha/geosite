@@ -10,7 +10,7 @@
 # Categories produced:
 #   our-whitelist   our-category-ru   our-geoblock-ru
 #   our-ads         our-winspy        our-torrent
-#   private         our-games
+#   private         our-games         our-blocked
 # =============================================================================
 set -euo pipefail
 
@@ -57,6 +57,11 @@ done
 echo ">> Harvest Loyalsoldier (win-spy)"
 LB="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release"
 fetch "$LB/win-spy.txt" "$LOY/loyal-win-spy.txt" || true
+
+echo ">> Harvest itdoginfo/allow-domains (что заблокировано в РФ / что требует домашнего IP)"
+IB="https://raw.githubusercontent.com/itdoginfo/allow-domains/main/Russia"
+fetch "$IB/inside-raw.lst"  "$CACHE/itdog-inside"  || true
+fetch "$IB/outside-raw.lst" "$CACHE/itdog-outside" || true
 
 echo ">> Harvest v2fly domain-list-community"
 VB="https://raw.githubusercontent.com/v2fly/domain-list-community/master/data"
@@ -139,8 +144,19 @@ domain:hd.kinopoisk.ru
 domain:mirea.ru
 EOF
 
+# itdoginfo outside-raw — ровно наша суть: российские сервисы, отбивающие чужие адреса
+# (госуслуги, налоговая, РЖД, Почта, Росреестр…). Голые домены, поэтому flatten_bare.
+catnl "$CACHE/itdog-outside" 2>/dev/null | flatten_bare > "$CACHE/gb_ru_itdog.txt" || true
+
 catnl "$CACHE/gb_ru_primary.txt" "$CACHE/gb_ru_rescued.txt" "$CACHE/gb_ru_curated.txt" \
-  | norm > "$OUT/our-geoblock-ru"
+      "$CACHE/gb_ru_itdog.txt" \
+  | norm > "$CACHE/gb_ru_all.txt"
+
+# Домен может оказаться и заблокированным в РФ, и отбивающим чужие адреса
+# (4pda, habr, onlinesim). Направить его мимо туннеля нельзя: заблокированный сайт
+# напрямую не откроется вовсе, а через туннель шанс есть. Блокировка старше гео-фильтра.
+catnl "$CACHE/itdog-inside" 2>/dev/null | flatten_bare | norm > "$CACHE/blocked_norm.txt" || true
+comm -23 "$CACHE/gb_ru_all.txt" "$CACHE/blocked_norm.txt" > "$OUT/our-geoblock-ru"
 
 # =============================================================================
 # 2. our-whitelist  — RU on foreign CDN + critical RU services + IDN .рф
@@ -326,10 +342,24 @@ domain:4game.com
 EOF
 norm < "$CACHE/games_curated.txt" > "$OUT/our-games"
 
+# =============================================================================
+# 9. our-blocked  — то, что заблокировано В РОССИИ и потому обязано идти в туннель.
+# -----------------------------------------------------------------------------
+# Это оборотная сторона схемы: вместо «гоним в туннель всё, кроме списка исключений»
+# гоним туда только перечисленное. Тогда любой российский сайт со своим антифродом,
+# гео-фильтром или блокировкой дата-центров работает как без VPN — просто потому,
+# что VPN его не касается. Список заблокированного конечен и поддерживается
+# сообществом, список «всех российских сайтов» — нет.
+# =============================================================================
+# Зоны в списке записаны с ведущей точкой (".ua"); компилятор такое отвергает и валит
+# сборку целиком, поэтому точку снимаем: "domain:ua" и так покрывает зону с поддоменами.
+catnl "$CACHE/itdog-inside" 2>/dev/null | flatten_bare | sed 's/^domain:\./domain:/' \
+  | norm > "$OUT/our-blocked"
+
 # ---- report ----------------------------------------------------------------
 echo
 echo "=== CATEGORY COUNTS ==="
-for f in our-whitelist our-category-ru our-geoblock-ru our-ads our-winspy our-torrent private our-games; do
+for f in our-whitelist our-category-ru our-geoblock-ru our-ads our-winspy our-torrent private our-games our-blocked; do
   printf "%-18s %6d entries\n" "$f" "$(wc -l < "$OUT/$f")"
 done
 echo

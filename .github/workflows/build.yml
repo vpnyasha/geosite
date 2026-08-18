@@ -76,8 +76,8 @@ jobs:
       - name: Verify categories are present & resolvable
         run: |
           /tmp/dlc-compiler -datapath ./data -outputdir /tmp/verify -outputname geosite.dat \
-            -exportlists "our-whitelist,our-category-ru,our-geoblock-ru,our-ads,our-winspy,our-torrent,private,our-games"
-          for c in our-whitelist our-category-ru our-geoblock-ru our-ads our-winspy our-torrent private our-games; do
+            -exportlists "our-whitelist,our-category-ru,our-geoblock-ru,our-ads,our-winspy,our-torrent,private,our-games,our-blocked"
+          for c in our-whitelist our-category-ru our-geoblock-ru our-ads our-winspy our-torrent private our-games our-blocked; do
             test -s "/tmp/verify/$c.txt" || { echo "missing/empty: $c"; exit 1; }
             echo "$c: $(wc -l < /tmp/verify/$c.txt) entries"
           done
