@@ -134,6 +134,9 @@ domain:avito.ru
 # Media (geo-fenced)
 domain:kinopoisk.ru
 domain:hd.kinopoisk.ru
+# Вузы: личные кабинеты и СДО отбивают адреса дата-центров (проверено: mirea.ru отдаёт
+# 403 и с московских, и с зарубежных серверов), поэтому им нужен домашний IP.
+domain:mirea.ru
 EOF
 
 catnl "$CACHE/gb_ru_primary.txt" "$CACHE/gb_ru_rescued.txt" "$CACHE/gb_ru_curated.txt" \
