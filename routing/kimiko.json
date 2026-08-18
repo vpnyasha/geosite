@@ -8,19 +8,16 @@
  "DomesticDNSType": "DoH",
  "DomesticDNSDomain": "https://77.88.8.8/dns-query",
  "DomesticDNSIP": "77.88.8.8",
- "Geoipurl": "https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geoip@202608170359/release/geoip.dat",
- "Geositeurl": "https://cdn.jsdelivr.net/gh/vpnyasha/geosite@202608171913/geosite.dat",
- "LastUpdated": "1786994291",
+ "Geoipurl": "https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geoip@202608150351/release/geoip.dat",
+ "Geositeurl": "https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geosite@202604152235/release/geosite.dat",
+ "LastUpdated": "1787041632",
  "DnsHosts": {
   "lkfl2.nalog.ru": "213.24.64.175",
   "lknpd.nalog.ru": "213.24.64.181"
  },
  "DirectSites": [
   "geosite:private",
-  "geosite:our-whitelist",
-  "geosite:our-category-ru",
-  "geosite:our-geoblock-ru",
-  "geosite:our-games"
+  "geosite:whitelist"
  ],
  "DirectIp": [
   "geoip:private",
@@ -29,8 +26,8 @@
  "ProxySites": [],
  "ProxyIp": [],
  "BlockSites": [
-  "geosite:our-winspy",
-  "geosite:our-ads"
+  "geosite:win-spy",
+  "geosite:category-ads"
  ],
  "BlockIp": [],
  "DomainStrategy": "IPIfNonMatch",
