@@ -68,6 +68,11 @@ jobs:
           /tmp/dlc-compiler -datapath ./data -outputdir ./ -outputname geosite.dat
           sha256sum geosite.dat | tee geosite.dat.sha256sum
 
+      - name: Build geoip.dat (адреса заблокированного + российские сети)
+        run: |
+          python3 ./build_geoip.py
+          sha256sum geoip.dat | tee geoip.dat.sha256sum
+
       - name: Build Mihomo/Clash and sing-box rule-sets
         run: |
           bash ./build_clash.sh
@@ -120,3 +125,5 @@ jobs:
           files: |
             geosite.dat
             geosite.dat.sha256sum
+            geoip.dat
+            geoip.dat.sha256sum
