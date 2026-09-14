@@ -29,7 +29,12 @@ DOMAIN-SUFFIX,agents.media
 DOMAIN-SUFFIX,ahrefs.com
 DOMAIN-SUFFIX,ai-chat.bsg.brave.com
 DOMAIN-SUFFIX,ai.com
+DOMAIN-SUFFIX,ai.studio
+DOMAIN-SUFFIX,aicode.googleapis.com
+DOMAIN-SUFFIX,aida.googleapis.com
 DOMAIN-SUFFIX,aircanada.com
+DOMAIN-SUFFIX,aisandbox-pa.googleapis.com
+DOMAIN-SUFFIX,aistudio.google.com
 DOMAIN-SUFFIX,akc.org
 DOMAIN-SUFFIX,all3dp.com
 DOMAIN-SUFFIX,allegro.pl
@@ -61,6 +66,8 @@ DOMAIN-SUFFIX,annas-archive.org
 DOMAIN-SUFFIX,ansys.com
 DOMAIN-SUFFIX,anthropic.com
 DOMAIN-SUFFIX,anthropic.qualtrics.com
+DOMAIN-SUFFIX,antigravity-unleash.goog
+DOMAIN-SUFFIX,antigravity.google
 DOMAIN-SUFFIX,any.do
 DOMAIN-SUFFIX,aol.com
 DOMAIN-SUFFIX,api.jetbrains.ai
@@ -91,6 +98,7 @@ DOMAIN-SUFFIX,babook.org
 DOMAIN-SUFFIX,backend-v2.crixet.com
 DOMAIN-SUFFIX,baginya.org
 DOMAIN-SUFFIX,baikal-journal.ru
+DOMAIN-SUFFIX,bard.google.com
 DOMAIN-SUFFIX,bato.to
 DOMAIN-SUFFIX,bbc.co.uk
 DOMAIN-SUFFIX,bbc.com
@@ -147,6 +155,8 @@ DOMAIN-SUFFIX,charhub.io
 DOMAIN-SUFFIX,chat.com
 DOMAIN-SUFFIX,chat.openai.com.cdn.cloudflare.net
 DOMAIN-SUFFIX,chatgpt.com
+DOMAIN-SUFFIX,chatgpt.livekit.cloud
+DOMAIN-SUFFIX,chatgpt.site
 DOMAIN-SUFFIX,chaturbate.com
 DOMAIN-SUFFIX,cherta.media
 DOMAIN-SUFFIX,chess.com
@@ -159,8 +169,12 @@ DOMAIN-SUFFIX,citrix.com
 DOMAIN-SUFFIX,clamav.net
 DOMAIN-SUFFIX,clashofclans.com
 DOMAIN-SUFFIX,clashroyaleapp.com
+DOMAIN-SUFFIX,clau.de
 DOMAIN-SUFFIX,claude.ai
 DOMAIN-SUFFIX,claude.com
+DOMAIN-SUFFIX,claudemcpclient.com
+DOMAIN-SUFFIX,claudemcpcontent.com
+DOMAIN-SUFFIX,claudeusercontent.com
 DOMAIN-SUFFIX,clevelandclinic.org
 DOMAIN-SUFFIX,clickup.com
 DOMAIN-SUFFIX,clip.opus.pro
@@ -187,6 +201,7 @@ DOMAIN-SUFFIX,corsair.com
 DOMAIN-SUFFIX,coursera.org
 DOMAIN-SUFFIX,cpu-monkey.com
 DOMAIN-SUFFIX,credly.com
+DOMAIN-SUFFIX,crixet.com
 DOMAIN-SUFFIX,croxyproxy.com
 DOMAIN-SUFFIX,crunchyroll.com
 DOMAIN-SUFFIX,csskor.ill.in.ua
@@ -209,6 +224,8 @@ DOMAIN-SUFFIX,data.cline.bot
 DOMAIN-SUFFIX,deckbrew.xyz
 DOMAIN-SUFFIX,decrypt.day
 DOMAIN-SUFFIX,deepl.com
+DOMAIN-SUFFIX,deepmind.com
+DOMAIN-SUFFIX,deepmind.google
 DOMAIN-SUFFIX,deepstatemap.live
 DOMAIN-SUFFIX,deezer.com
 DOMAIN-SUFFIX,delfi.lt
@@ -326,6 +343,7 @@ DOMAIN-SUFFIX,flir.com
 DOMAIN-SUFFIX,flir.eu
 DOMAIN-SUFFIX,flisland.net
 DOMAIN-SUFFIX,flourish.studio
+DOMAIN-SUFFIX,flow.google
 DOMAIN-SUFFIX,fls.guru
 DOMAIN-SUFFIX,fluke.com
 DOMAIN-SUFFIX,flukenetworks.com
@@ -360,6 +378,12 @@ DOMAIN-SUFFIX,gamestop.com
 DOMAIN-SUFFIX,gaming.amazon.com
 DOMAIN-SUFFIX,geforcenow.com
 DOMAIN-SUFFIX,gelbooru.com
+DOMAIN-SUFFIX,geller-pa.googleapis.com
+DOMAIN-SUFFIX,gemini.google
+DOMAIN-SUFFIX,gemini.google.com
+DOMAIN-SUFFIX,gemini.gstatic.com
+DOMAIN-SUFFIX,generativeai.google
+DOMAIN-SUFFIX,generativelanguage.googleapis.com
 DOMAIN-SUFFIX,genspark.ai
 DOMAIN-SUFFIX,geolocation.onetrust.com
 DOMAIN-SUFFIX,germania.one
@@ -426,6 +450,7 @@ DOMAIN-SUFFIX,hollisterco.com
 DOMAIN-SUFFIX,holod.media
 DOMAIN-SUFFIX,home-connect.com
 DOMAIN-SUFFIX,home.by.me
+DOMAIN-SUFFIX,host.livekit.cloud
 DOMAIN-SUFFIX,hostgator.com
 DOMAIN-SUFFIX,hostinger.com
 DOMAIN-SUFFIX,hotels.com
@@ -484,6 +509,8 @@ DOMAIN-SUFFIX,jetbrains.team
 DOMAIN-SUFFIX,jnn-pa.googleapis.com
 DOMAIN-SUFFIX,joesandbox.com
 DOMAIN-SUFFIX,jskor.ill.in.ua
+DOMAIN-SUFFIX,jules.google
+DOMAIN-SUFFIX,jules.google.com
 DOMAIN-SUFFIX,jut-su.net
 DOMAIN-SUFFIX,jut.su
 DOMAIN-SUFFIX,kaktus.media
@@ -518,6 +545,8 @@ DOMAIN-SUFFIX,kovcheg.live
 DOMAIN-SUFFIX,krymr.com
 DOMAIN-SUFFIX,kupujemprodajem.com
 DOMAIN-SUFFIX,kym-cdn.com
+DOMAIN-SUFFIX,labs.google
+DOMAIN-SUFFIX,labs.google.com
 DOMAIN-SUFFIX,lambdalabs.com
 DOMAIN-SUFFIX,lamcdn.net
 DOMAIN-SUFFIX,langdock.com
@@ -560,6 +589,7 @@ DOMAIN-SUFFIX,mailfence.com
 DOMAIN-SUFFIX,mailinator.com
 DOMAIN-SUFFIX,mailo.com
 DOMAIN-SUFFIX,make.com
+DOMAIN-SUFFIX,makersuite.google.com
 DOMAIN-SUFFIX,malwarebytes.com
 DOMAIN-SUFFIX,manga-chan.me
 DOMAIN-SUFFIX,mangadex.org
@@ -658,6 +688,9 @@ DOMAIN-SUFFIX,nnmstatic.win
 DOMAIN-SUFFIX,nordaccount.com
 DOMAIN-SUFFIX,nordcdn.com
 DOMAIN-SUFFIX,nordvpn.com
+DOMAIN-SUFFIX,notebook.google.com
+DOMAIN-SUFFIX,notebooklm.google
+DOMAIN-SUFFIX,notebooklm.google.com
 DOMAIN-SUFFIX,notepad-plus-plus.org
 DOMAIN-SUFFIX,notion-emojis.s3-us-west-2.amazonaws.com
 DOMAIN-SUFFIX,notion-static.com
@@ -675,6 +708,7 @@ DOMAIN-SUFFIX,ntp.msn.com
 DOMAIN-SUFFIX,nude-moon.org
 DOMAIN-SUFFIX,nxp.com
 DOMAIN-SUFFIX,oaistatic.com
+DOMAIN-SUFFIX,oaistatsig.com
 DOMAIN-SUFFIX,oaiusercontent.com
 DOMAIN-SUFFIX,obozrevatel.com
 DOMAIN-SUFFIX,ocstore.com
@@ -689,7 +723,10 @@ DOMAIN-SUFFIX,omv-extras.org
 DOMAIN-SUFFIX,onfastspring.com
 DOMAIN-SUFFIX,onlinesim.io
 DOMAIN-SUFFIX,onshape.com
+DOMAIN-SUFFIX,opal.google
+DOMAIN-SUFFIX,opal.google.com
 DOMAIN-SUFFIX,openai.com
+DOMAIN-SUFFIX,openai.com.cdn.cloudflare.net
 DOMAIN-SUFFIX,openh264.org
 DOMAIN-SUFFIX,openmedia.io
 DOMAIN-SUFFIX,openrouter.ai
@@ -822,6 +859,7 @@ DOMAIN-SUFFIX,rima.media
 DOMAIN-SUFFIX,riperam.org
 DOMAIN-SUFFIX,riseup.net
 DOMAIN-SUFFIX,roar-review.com
+DOMAIN-SUFFIX,robinfrontend-pa.googleapis.com
 DOMAIN-SUFFIX,root-nation.com
 DOMAIN-SUFFIX,roskomsvoboda.org
 DOMAIN-SUFFIX,rublacklist.net
@@ -950,6 +988,7 @@ DOMAIN-SUFFIX,startpage.com
 DOMAIN-SUFFIX,static.lostfilm.top
 DOMAIN-SUFFIX,statology.org
 DOMAIN-SUFFIX,steamstat.info
+DOMAIN-SUFFIX,stitch.withgoogle.com
 DOMAIN-SUFFIX,strana.news
 DOMAIN-SUFFIX,strana.today
 DOMAIN-SUFFIX,strava.com
@@ -1035,6 +1074,7 @@ DOMAIN-SUFFIX,truthsocial.com
 DOMAIN-SUFFIX,tsmc.com
 DOMAIN-SUFFIX,ttwstatic.com
 DOMAIN-SUFFIX,turbobit.net
+DOMAIN-SUFFIX,turn.livekit.cloud
 DOMAIN-SUFFIX,tuta.com
 DOMAIN-SUFFIX,tuta.io
 DOMAIN-SUFFIX,tutanota.com
@@ -1181,3 +1221,24 @@ DOMAIN-SUFFIX,zendesk.com
 DOMAIN-SUFFIX,zerkalo.io
 DOMAIN-SUFFIX,zerossl.com
 DOMAIN-SUFFIX,zona.media
+DOMAIN,ai.google.dev
+DOMAIN,alkalicore-pa.clients6.google.com
+DOMAIN,alkalimakersuite-pa.clients6.google.com
+DOMAIN,antigravity-pa.googleapis.com
+DOMAIN,antigravity.googleapis.com
+DOMAIN,browser-intake-datadoghq.com
+DOMAIN,cloudaicompanion.googleapis.com
+DOMAIN,cloudcode-pa.googleapis.com
+DOMAIN,daily-cloudcode-pa.googleapis.com
+DOMAIN,notebooklm-pa.googleapis.com
+DOMAIN,notebooklm.googleapis.com
+DOMAIN,o33249.ingest.sentry.io
+DOMAIN,openai.qualtrics.com
+DOMAIN,openaiapi-site.azureedge.net
+DOMAIN,openaiassets.blob.core.windows.net
+DOMAIN,openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
+DOMAIN,openaicom.imgix.net
+DOMAIN,openaicomproductionae4b.blob.core.windows.net
+DOMAIN,production-openaicom-storage.azureedge.net
+DOMAIN,servd-anthropic-website.b-cdn.net
+DOMAIN,webchannel-alkalimakersuite-pa.clients6.google.com
