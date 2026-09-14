@@ -71,6 +71,13 @@ fetch "$VB/private"                 "$V2/v2-private" || true
 for f in openx pubmatic taboola segment adjust ogury supersonic growingio clearbit; do
   fetch "$VB/$f" "$V2/v2-ad-$f" || true
 done
+# Иностранные сервисы, которые сами отрезали Россию (см. раздел 9). Без `|| true`:
+# молча пропавший список — это Gemini, который у всех «вдруг перестал работать».
+# google-deepmind, а не google-gemini: тот состоит из одного include, а flatten_bare
+# include-строки выбрасывает — категория вышла бы пустой.
+for f in google-deepmind openai anthropic; do
+  fetch "$VB/$f" "$V2/v2-foreign-$f"
+done
 
 # =============================================================================
 # 1. our-geoblock-ru  — CHERRY-PICK: ONLY the Russian side.
@@ -353,8 +360,31 @@ norm < "$CACHE/games_curated.txt" > "$OUT/our-games"
 # =============================================================================
 # Зоны в списке записаны с ведущей точкой (".ua"); компилятор такое отвергает и валит
 # сборку целиком, поэтому точку снимаем: "domain:ua" и так покрывает зону с поддоменами.
-catnl "$CACHE/itdog-inside" 2>/dev/null | flatten_bare | sed 's/^domain:\./domain:/' \
-  | norm > "$OUT/our-blocked"
+#
+# Сюда же — сервисы, которые закрыты не Россией, а САМИ закрыли Россию: Gemini, OpenAI,
+# Anthropic. Итог тот же — обязаны идти в туннель, — но опасность другая. Их домены
+# зарубежные и по IP сами не попадут в geoip:ru... кроме случаев, когда домашний DNS
+# отдаёт адрес кеш-узла Google внутри российского провайдера. Тогда сплит по IP уведёт
+# Gemini «напрямую», и Google покажет «недоступно в вашей стране». Имя в our-blocked
+# сматчится раньше, чем дело дойдёт до IP, — ProxySites проверяются до DirectIp.
+#
+# Из иностранных списков берём только domain:/full:. Регулярки и keyword там единичны и
+# нам не нужны, а риск несимметричный: выражение, которое не примет Go-движок, валит
+# загрузку профиля у клиентов и старт Xray на ноде целиком. Нашим спискам хватает имён.
+{ catnl "$CACHE/itdog-inside" 2>/dev/null | flatten_bare | sed 's/^domain:\./domain:/'
+  catnl "$V2"/v2-foreign-* | flatten_bare | grep -E '^(domain|full):'
+} | norm > "$OUT/our-blocked"
+
+# Нижний порог — на случай, когда itdog ответил, но отдал обрезанный список. Полное
+# отсутствие файла валит сборку и так (pipefail в конвейере выше), а вот урезанный
+# ответ без порога прошёл бы: иностранные сервисы оставят в категории сотню строк.
+# Итог — нода и клиенты перестают уводить в туннель YouTube, Instagram и остальное
+# заблокированное. Порог с запасом ниже обычного объёма (~1200).
+OUR_BLOCKED_MIN=1000
+[ "$(wc -l < "$OUT/our-blocked")" -ge "$OUR_BLOCKED_MIN" ] || {
+  echo "!! our-blocked: $(wc -l < "$OUT/our-blocked") строк, ожидалось не меньше $OUR_BLOCKED_MIN — источник itdog пришёл обрезанным" >&2
+  exit 1
+}
 
 # ---- report ----------------------------------------------------------------
 echo
@@ -369,6 +399,12 @@ if grep -iqE 'adobe|openai|chatgpt|spotify|behance|arkoselabs|crashlytics|ftcdn|
 else
   echo "ok — no foreign-block services in our-geoblock-ru"
 fi
+
+echo "Safety check: foreign self-geoblockers MUST be in our-blocked (иначе уйдут напрямую):"
+for d in gemini.google.com generativelanguage.googleapis.com aistudio.google.com chatgpt.com claude.ai; do
+  grep -qxE "(domain|full):$d" "$OUT/our-blocked" || { echo "!! MISSING $d in our-blocked" >&2; exit 1; }
+done
+echo "ok — Gemini, OpenAI и Anthropic идут в туннель"
 
 echo "Safety check: RU-blocked services must NOT appear in our-games (it routes direct):"
 if grep -iqE 'discord|roblox|steamcommunity' "$OUT/our-games"; then

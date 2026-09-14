@@ -29,7 +29,12 @@ domain:agents.media
 domain:ahrefs.com
 domain:ai-chat.bsg.brave.com
 domain:ai.com
+domain:ai.studio
+domain:aicode.googleapis.com
+domain:aida.googleapis.com
 domain:aircanada.com
+domain:aisandbox-pa.googleapis.com
+domain:aistudio.google.com
 domain:akc.org
 domain:all3dp.com
 domain:allegro.pl
@@ -61,6 +66,8 @@ domain:annas-archive.org
 domain:ansys.com
 domain:anthropic.com
 domain:anthropic.qualtrics.com
+domain:antigravity-unleash.goog
+domain:antigravity.google
 domain:any.do
 domain:aol.com
 domain:api.jetbrains.ai
@@ -91,6 +98,7 @@ domain:babook.org
 domain:backend-v2.crixet.com
 domain:baginya.org
 domain:baikal-journal.ru
+domain:bard.google.com
 domain:bato.to
 domain:bbc.co.uk
 domain:bbc.com
@@ -147,6 +155,8 @@ domain:charhub.io
 domain:chat.com
 domain:chat.openai.com.cdn.cloudflare.net
 domain:chatgpt.com
+domain:chatgpt.livekit.cloud
+domain:chatgpt.site
 domain:chaturbate.com
 domain:cherta.media
 domain:chess.com
@@ -159,8 +169,12 @@ domain:citrix.com
 domain:clamav.net
 domain:clashofclans.com
 domain:clashroyaleapp.com
+domain:clau.de
 domain:claude.ai
 domain:claude.com
+domain:claudemcpclient.com
+domain:claudemcpcontent.com
+domain:claudeusercontent.com
 domain:clevelandclinic.org
 domain:clickup.com
 domain:clip.opus.pro
@@ -187,6 +201,7 @@ domain:corsair.com
 domain:coursera.org
 domain:cpu-monkey.com
 domain:credly.com
+domain:crixet.com
 domain:croxyproxy.com
 domain:crunchyroll.com
 domain:csskor.ill.in.ua
@@ -209,6 +224,8 @@ domain:data.cline.bot
 domain:deckbrew.xyz
 domain:decrypt.day
 domain:deepl.com
+domain:deepmind.com
+domain:deepmind.google
 domain:deepstatemap.live
 domain:deezer.com
 domain:delfi.lt
@@ -326,6 +343,7 @@ domain:flir.com
 domain:flir.eu
 domain:flisland.net
 domain:flourish.studio
+domain:flow.google
 domain:fls.guru
 domain:fluke.com
 domain:flukenetworks.com
@@ -360,6 +378,12 @@ domain:gamestop.com
 domain:gaming.amazon.com
 domain:geforcenow.com
 domain:gelbooru.com
+domain:geller-pa.googleapis.com
+domain:gemini.google
+domain:gemini.google.com
+domain:gemini.gstatic.com
+domain:generativeai.google
+domain:generativelanguage.googleapis.com
 domain:genspark.ai
 domain:geolocation.onetrust.com
 domain:germania.one
@@ -426,6 +450,7 @@ domain:hollisterco.com
 domain:holod.media
 domain:home-connect.com
 domain:home.by.me
+domain:host.livekit.cloud
 domain:hostgator.com
 domain:hostinger.com
 domain:hotels.com
@@ -484,6 +509,8 @@ domain:jetbrains.team
 domain:jnn-pa.googleapis.com
 domain:joesandbox.com
 domain:jskor.ill.in.ua
+domain:jules.google
+domain:jules.google.com
 domain:jut-su.net
 domain:jut.su
 domain:kaktus.media
@@ -518,6 +545,8 @@ domain:kovcheg.live
 domain:krymr.com
 domain:kupujemprodajem.com
 domain:kym-cdn.com
+domain:labs.google
+domain:labs.google.com
 domain:lambdalabs.com
 domain:lamcdn.net
 domain:langdock.com
@@ -560,6 +589,7 @@ domain:mailfence.com
 domain:mailinator.com
 domain:mailo.com
 domain:make.com
+domain:makersuite.google.com
 domain:malwarebytes.com
 domain:manga-chan.me
 domain:mangadex.org
@@ -658,6 +688,9 @@ domain:nnmstatic.win
 domain:nordaccount.com
 domain:nordcdn.com
 domain:nordvpn.com
+domain:notebook.google.com
+domain:notebooklm.google
+domain:notebooklm.google.com
 domain:notepad-plus-plus.org
 domain:notion-emojis.s3-us-west-2.amazonaws.com
 domain:notion-static.com
@@ -675,6 +708,7 @@ domain:ntp.msn.com
 domain:nude-moon.org
 domain:nxp.com
 domain:oaistatic.com
+domain:oaistatsig.com
 domain:oaiusercontent.com
 domain:obozrevatel.com
 domain:ocstore.com
@@ -689,7 +723,10 @@ domain:omv-extras.org
 domain:onfastspring.com
 domain:onlinesim.io
 domain:onshape.com
+domain:opal.google
+domain:opal.google.com
 domain:openai.com
+domain:openai.com.cdn.cloudflare.net
 domain:openh264.org
 domain:openmedia.io
 domain:openrouter.ai
@@ -822,6 +859,7 @@ domain:rima.media
 domain:riperam.org
 domain:riseup.net
 domain:roar-review.com
+domain:robinfrontend-pa.googleapis.com
 domain:root-nation.com
 domain:roskomsvoboda.org
 domain:rublacklist.net
@@ -950,6 +988,7 @@ domain:startpage.com
 domain:static.lostfilm.top
 domain:statology.org
 domain:steamstat.info
+domain:stitch.withgoogle.com
 domain:strana.news
 domain:strana.today
 domain:strava.com
@@ -1035,6 +1074,7 @@ domain:truthsocial.com
 domain:tsmc.com
 domain:ttwstatic.com
 domain:turbobit.net
+domain:turn.livekit.cloud
 domain:tuta.com
 domain:tuta.io
 domain:tutanota.com
@@ -1181,3 +1221,24 @@ domain:zendesk.com
 domain:zerkalo.io
 domain:zerossl.com
 domain:zona.media
+full:ai.google.dev
+full:alkalicore-pa.clients6.google.com
+full:alkalimakersuite-pa.clients6.google.com
+full:antigravity-pa.googleapis.com
+full:antigravity.googleapis.com
+full:browser-intake-datadoghq.com
+full:cloudaicompanion.googleapis.com
+full:cloudcode-pa.googleapis.com
+full:daily-cloudcode-pa.googleapis.com
+full:notebooklm-pa.googleapis.com
+full:notebooklm.googleapis.com
+full:o33249.ingest.sentry.io
+full:openai.qualtrics.com
+full:openaiapi-site.azureedge.net
+full:openaiassets.blob.core.windows.net
+full:openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
+full:openaicom.imgix.net
+full:openaicomproductionae4b.blob.core.windows.net
+full:production-openaicom-storage.azureedge.net
+full:servd-anthropic-website.b-cdn.net
+full:webchannel-alkalimakersuite-pa.clients6.google.com

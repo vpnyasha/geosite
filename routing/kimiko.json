@@ -1,36 +1,40 @@
 {
- "Name": "Kimiko Whitelist",
- "GlobalProxy": "true",
- "RouteOrder": "block-proxy-direct",
- "RemoteDNSType": "DoH",
- "RemoteDNSDomain": "https://8.8.8.8/dns-query",
- "RemoteDNSIP": "8.8.8.8",
- "DomesticDNSType": "DoH",
- "DomesticDNSDomain": "https://77.88.8.8/dns-query",
- "DomesticDNSIP": "77.88.8.8",
- "Geoipurl": "https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geoip@202608150351/release/geoip.dat",
- "Geositeurl": "https://cdn.jsdelivr.net/gh/hydraponique/roscomvpn-geosite@202604152235/release/geosite.dat",
- "LastUpdated": "1787041632",
- "DnsHosts": {
-  "lkfl2.nalog.ru": "213.24.64.175",
-  "lknpd.nalog.ru": "213.24.64.181"
- },
- "DirectSites": [
-  "geosite:private",
-  "geosite:whitelist"
- ],
- "DirectIp": [
-  "geoip:private",
-  "geoip:whitelist"
- ],
- "ProxySites": [],
- "ProxyIp": [],
- "BlockSites": [
-  "geosite:win-spy",
-  "geosite:category-ads"
- ],
- "BlockIp": [],
- "DomainStrategy": "IPIfNonMatch",
- "FakeDNS": "false",
- "UseChunkFiles": "true"
+  "Name": "Kimiko",
+  "GlobalProxy": "true",
+  "RouteOrder": "block-proxy-direct",
+  "RemoteDNSType": "DoH",
+  "RemoteDNSDomain": "https://8.8.8.8/dns-query",
+  "RemoteDNSIP": "8.8.8.8",
+  "DomesticDNSType": "DoH",
+  "DomesticDNSDomain": "https://77.88.8.8/dns-query",
+  "DomesticDNSIP": "77.88.8.8",
+  "Geoipurl": "__GEO_BASE__/geoip.dat",
+  "Geositeurl": "__GEO_BASE__/geosite.dat",
+  "LastUpdated": "__LAST_UPDATED__",
+  "DnsHosts": {},
+  "DirectSites": [
+    "geosite:private",
+    "geosite:our-whitelist",
+    "geosite:our-category-ru",
+    "geosite:our-geoblock-ru",
+    "geosite:our-games"
+  ],
+  "DirectIp": [
+    "geoip:private",
+    "geoip:ru"
+  ],
+  "ProxySites": [
+    "geosite:our-blocked"
+  ],
+  "ProxyIp": [
+    "geoip:blocked"
+  ],
+  "BlockSites": [
+    "geosite:our-ads",
+    "geosite:our-winspy"
+  ],
+  "BlockIp": [],
+  "DomainStrategy": "IPIfNonMatch",
+  "FakeDNS": "false",
+  "UseChunkFiles": "true"
 }
