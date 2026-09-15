@@ -97,7 +97,13 @@ for f, v in read_fields(raw):
         for addr, prefix in CURATED.get(ours, []):
             octets = bytes(int(x) for x in addr.split("."))
             extra.append(blob(1, octets) + tag(2, 0) + varint(prefix))
-        entry = blob(1, ours.encode()) + b"".join(blob(2, c) for c in cidrs + extra)
+        # Код категории — ТОЛЬКО в верхнем регистре. Xray приводит `geoip:blocked` из
+        # правила к BLOCKED и ищет в файле байт в байт; «blocked» он не найдёт и упадёт с
+        # «failed to check code BLOCKED from geoip.dat > EOF» — у клиента не загрузится
+        # весь профиль. Так это и сломалось 15.09.2026 на первой же проверке в INCY:
+        # источник хранит RU-BLOCKED/RU/PRIVATE, а при переименовании регистр потерялся.
+        # geosite.dat официальный компилятор и так пишет в верхнем.
+        entry = blob(1, ours.upper().encode()) + b"".join(blob(2, c) for c in cidrs + extra)
         out += blob(1, entry)
         found[ours] = len(cidrs) + len(extra)
 

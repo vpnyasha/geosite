@@ -1,0 +1,21 @@
+{
+  "log": {"loglevel": "warning"},
+  "outbounds": [
+    {"tag": "proxy", "protocol": "freedom"},
+    {"tag": "direct", "protocol": "freedom"},
+    {"tag": "block", "protocol": "blackhole"}
+  ],
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {"type": "field", "domain": ["geosite:private", "geosite:our-whitelist", "geosite:our-category-ru", "geosite:our-geoblock-ru", "geosite:our-games"], "outboundTag": "direct"},
+      {"type": "field", "ip": ["geoip:private", "geoip:ru"], "outboundTag": "direct"},
+      {"type": "field", "domain": ["geosite:our-blocked"], "outboundTag": "proxy"},
+      {"type": "field", "ip": ["geoip:blocked"], "outboundTag": "proxy"},
+      {"type": "field", "domain": ["geosite:our-ads", "geosite:our-winspy"], "outboundTag": "block"},
+      {"type": "field", "domain": ["ext:our-geosite.dat:our-ads", "ext:our-geosite.dat:our-winspy", "ext:our-geosite.dat:our-torrent"], "outboundTag": "block"},
+      {"type": "field", "domain": ["ext:our-geosite.dat:our-blocked"], "outboundTag": "proxy"},
+      {"type": "field", "domain": ["ext:our-geosite.dat:our-whitelist", "ext:our-geosite.dat:our-category-ru", "ext:our-geosite.dat:our-geoblock-ru"], "outboundTag": "direct"}
+    ]
+  }
+}

@@ -73,6 +73,24 @@ jobs:
           python3 ./build_geoip.py
           sha256sum geoip.dat | tee geoip.dat.sha256sum
 
+      # Проверяет файлы тот же движок, что у клиентов и на ноде, — не самописный разбор.
+      # 15.09.2026 geoip.dat вышел с кодами категорий в нижнем регистре: разбор сказал «всё
+      # на месте», а Xray не нашёл ни одной (он ищет код в верхнем регистре), и у клиента не
+      # загрузился весь профиль. Здесь такой набор не дойдёт до релиза.
+      # Конфиг ci/xray-check.json повторяет правила клиентского профиля и профиля ноды:
+      # меняешь категории в любом из них — поправь и его. Версия Xray закреплена, чтобы CI
+      # не краснел от чужого релиза; обновлять осознанно.
+      - name: Verify geo files load in real Xray
+        env:
+          XRAY_VERSION: v26.3.27
+        run: |
+          curl -fsSL "https://github.com/XTLS/Xray-core/releases/download/${XRAY_VERSION}/Xray-linux-64.zip" -o /tmp/xray.zip
+          unzip -oq /tmp/xray.zip xray -d /tmp/xray
+          mkdir -p /tmp/geo-check
+          cp geosite.dat geoip.dat /tmp/geo-check/
+          cp geosite.dat /tmp/geo-check/our-geosite.dat   # под этим именем файл подключает нода
+          XRAY_LOCATION_ASSET=/tmp/geo-check /tmp/xray/xray run -test -c ci/xray-check.json
+
       - name: Build Mihomo/Clash and sing-box rule-sets
         run: |
           bash ./build_clash.sh
