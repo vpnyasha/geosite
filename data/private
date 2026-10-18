@@ -119,6 +119,8 @@ domain:zte.home
 full:asusrouter.com
 full:instant.arubanetworks.com
 full:local.adguard.org
+full:localhost.weixin.qq.com
+full:localhost.work.weixin.qq.com
 full:miwifi.com
 full:oasisauth.h3c.com
 full:router.asus.com
