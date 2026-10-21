@@ -64,10 +64,13 @@ domain:anistar.org
 domain:anistars.ru
 domain:annas-archive.org
 domain:ansys.com
+domain:ant.dev
 domain:anthropic.com
 domain:anthropic.qualtrics.com
+domain:anthropic.team
 domain:antigravity-unleash.goog
 domain:antigravity.google
+domain:antspace.dev # https://github.com/AprilNEA/reverse-engineering-claude-code-antspace
 domain:any.do
 domain:aol.com
 domain:api.jetbrains.ai
@@ -154,6 +157,7 @@ domain:chaos.com
 domain:charhub.io
 domain:chat.com
 domain:chat.openai.com.cdn.cloudflare.net
+domain:chatbotclaude.com
 domain:chatgpt.com
 domain:chatgpt.livekit.cloud
 domain:chatgpt.site
@@ -171,10 +175,16 @@ domain:clashofclans.com
 domain:clashroyaleapp.com
 domain:clau.de
 domain:claude.ai
+domain:claude.app
 domain:claude.com
 domain:claude.dev
+domain:claude.new
+domain:claude.site
+domain:claudeacademy.com
 domain:claudemcpclient.com
 domain:claudemcpcontent.com
+domain:claudepages.dev
+domain:claudestudio.com
 domain:claudeusercontent.com
 domain:clevelandclinic.org
 domain:clickup.com
@@ -1240,6 +1250,7 @@ full:geminiweb-pa.clients6.google.com
 full:notebooklm-pa.googleapis.com
 full:notebooklm.googleapis.com
 full:o33249.ingest.sentry.io
+full:o33249.ingest.us.sentry.io
 full:openai.qualtrics.com
 full:openaiapi-site.azureedge.net
 full:openaiassets.blob.core.windows.net
