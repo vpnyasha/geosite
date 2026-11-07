@@ -1250,8 +1250,10 @@ full:cloudcode-pa.googleapis.com
 full:daily-cloudcode-pa.googleapis.com
 full:geminiweb-pa.clients.google.com
 full:geminiweb-pa.clients6.google.com
+full:http-intake.logs.us5.datadoghq.com
 full:notebooklm-pa.googleapis.com
 full:notebooklm.googleapis.com
+full:o1158394.ingest.us.sentry.io
 full:o33249.ingest.sentry.io
 full:o33249.ingest.us.sentry.io
 full:openai.qualtrics.com
